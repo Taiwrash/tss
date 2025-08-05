@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { calculateReadingTime } from '@/utils/readingTime';
 
 interface BlogPost {
   slug: string;
@@ -14,6 +15,7 @@ interface BlogPost {
   published_at: string;
   github_path: string;
   tags?: string[];
+  readingTime?: number;
 }
 
 export default function Blog() {
@@ -42,14 +44,14 @@ export default function Blog() {
           try {
             const contentResponse = await fetch(file.download_url);
             const content = await contentResponse.text();
-            
+            const readingTime = calculateReadingTime(content)
             // Extract metadata from markdown
             const slug = file.name.replace('.md', '');
             let title = slug.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
             let excerpt = '';
             let publishedAt = new Date().toISOString().split('T')[0];
             let tags: string[] = [];
-
+    
             // Simple frontmatter parsing
             const lines = content.split('\n');
             if (lines[0] === '---') {
@@ -81,7 +83,8 @@ export default function Blog() {
               content: '',
               published_at: publishedAt,
               github_path: file.name,
-              tags
+              tags,
+              readingTime
             };
           } catch (error) {
             console.error(`Error processing ${file.name}:`, error);
@@ -146,7 +149,7 @@ export default function Blog() {
                   </div>
                   <div className="flex items-center gap-1">
                     <Clock className="h-4 w-4" />
-                    5 min read
+                    {post.readingTime} min read
                   </div>
                 </div>
                 

@@ -13,6 +13,18 @@ import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import 'highlight.js/styles/github-dark.css';
 
+
+const getGithubRawUrl = (src: string): string => {
+  // Handle absolute URLs
+  if (src.startsWith('http')) {
+    return src;
+  }
+  
+  // Convert relative paths to GitHub raw URLs
+  // Assuming images are stored in the same repository as the blog posts
+  return `https://raw.githubusercontent.com/taiwrash/blogs/main/${src.startsWith('/') ? src.slice(1) : src}`;
+};
+
 interface BlogPost {
   slug: string;
   title: string;
@@ -345,7 +357,8 @@ export default function BlogPost() {
                   ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-4 text-foreground" {...props} />,
                   li: ({node, ...props}) => <li className="mb-2 text-foreground" {...props} />,
                   a: ({node, ...props}) => <a className="text-primary hover:text-primary/80 underline font-medium" {...props} />,
-                  img: ({node, ...props}) => <img className="rounded-lg shadow-lg my-6 max-w-full h-auto" {...props} />,
+                  // img: ({node, ...props}) => <img className="rounded-lg shadow-lg my-6 max-w-full h-auto" {...props} />,
+                  img: ({node, ...props}) => (<img className="rounded-lg shadow-lg my-6 max-w-full h-auto" {...props} src={getGithubRawUrl(props.src || '')} alt={props.alt || ''} loading="lazy"/>),
                   table: ({node, ...props}) => <table className="w-full border-collapse border border-border rounded-lg overflow-hidden my-6" {...props} />,
                   th: ({node, ...props}) => <th className="bg-muted p-3 text-left font-semibold text-foreground border border-border" {...props} />,
                   td: ({node, ...props}) => <td className="p-3 text-foreground border border-border" {...props} />,
