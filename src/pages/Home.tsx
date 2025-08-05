@@ -6,8 +6,9 @@ import { Link } from 'react-router-dom';
 
 export default function Home() {
   const skills = [
-    'React', 'TypeScript', 'Node.js', 'Python', 'Docker', 
-    'Kubernetes', 'AWS', 'DevOps', 'Developer Relations',
+    'Golang', 'React', 'TypeScript', 'Python', 'Docker', 
+    'Kubernetes', 'AWS', 'DevOps', 'Google Cloud', 'Azure', 
+    'Tarraform', 'Jenkins', 'Developer Relations',
     'Technical Writing', 'Community Building', 'Public Speaking'
   ];
 
@@ -46,11 +47,11 @@ export default function Home() {
           </p>
           
           <div className="flex flex-wrap justify-center gap-4 mt-8">
-            <Link to="/projects">
+            {/* <Link to="/projects">
               <Button size="lg" className="gap-2">
                 View My Projects <ExternalLink className="h-4 w-4" />
               </Button>
-            </Link>
+            </Link> */}
             <Link to="/blog">
               <Button variant="outline" size="lg">
                 Read My Blog
@@ -66,12 +67,12 @@ export default function Home() {
               </a>
             </Button>
             <Button variant="outline" size="icon" asChild>
-              <a href="https://linkedin.com/in/taiwrash" target="_blank" rel="noopener noreferrer">
+              <a href="https://linkedin.com/in/rasheedtaiwo" target="_blank" rel="noopener noreferrer">
                 <Linkedin className="h-4 w-4" />
               </a>
             </Button>
             <Button variant="outline" size="icon" asChild>
-              <a href="mailto:taiwrash@example.com">
+              <a href="mailto:taiwrash.tech@gmail.com">
                 <Mail className="h-4 w-4" />
               </a>
             </Button>
