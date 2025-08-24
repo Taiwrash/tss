@@ -179,17 +179,6 @@ export default function Blog() {
                       Read More
                     </Button>
                   </Link>
-                  
-                  <Button variant="outline" size="sm" asChild>
-                    <a 
-                      href={`https://github.com/taiwrash/blogs/blob/main/${post.github_path}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ExternalLink className="h-4 w-4 mr-1" />
-                      View on GitHub
-                    </a>
-                  </Button>
                 </div>
               </CardContent>
             </Card>

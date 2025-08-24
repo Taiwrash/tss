@@ -32,6 +32,7 @@ interface BlogPost {
   published_at: string;
   github_path: string;
   tags?: string[];
+  author?: string; 
 }
 
 interface Comment {
@@ -82,6 +83,7 @@ export default function BlogPost() {
       let title = slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
       let publishedAt = new Date().toISOString().split('T')[0];
       let tags: string[] = [];
+      let author = 'taiwrash';
       
       // Simple frontmatter parsing
       if (lines[0] === '---') {
@@ -103,7 +105,8 @@ export default function BlogPost() {
             content,
             published_at: publishedAt,
             github_path: `${slug}.md`,
-            tags
+            tags,
+            author
           });
         }
       } else {
@@ -114,7 +117,8 @@ export default function BlogPost() {
           content: markdown,
           published_at: publishedAt,
           github_path: `${slug}.md`,
-          tags
+          tags,
+          author
         });
       }
     } catch (error) {
@@ -291,6 +295,7 @@ export default function BlogPost() {
   }
 
   return (
+    
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         {/* Back Button */}
@@ -313,7 +318,7 @@ export default function BlogPost() {
                 <CalendarDays className="h-4 w-4" />
                 {formatDate(post.published_at)}
               </div>
-              <Button variant="outline" size="sm" asChild>
+              {/* <Button variant="outline" size="sm" asChild>
                 <a 
                   href={`https://github.com/taiwrash/blogs/blob/main/${post.github_path}`}
                   target="_blank"
@@ -322,7 +327,19 @@ export default function BlogPost() {
                   <ExternalLink className="h-4 w-4 mr-1" />
                   View Source
                 </a>
-              </Button>
+              </Button> */}
+                {post.author && (
+                  <Link 
+                    to={`https://github.com/${post.author}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 hover:text-primary transition-colors"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    @{post.author}
+                  </Link>
+                )}
+
             </div>
 
             {post.tags && (
